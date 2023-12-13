@@ -37,10 +37,9 @@ class Flappy:
             sounds=Sounds(),
         )
         self.cap = cv2.VideoCapture(0)
-        self.tracker = cv2.TrackerKCF_create()  # Inicialize o tracker aqui
-        self.tracking = False  # Flag para indicar se estamos rastreando
+        self.tracker = cv2.TrackerKCF_create()
+        self.tracking = False
 
-        # Inicialize o classificador de cascata para detecção de rosto
         self.face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
     async def start(self):
@@ -123,7 +122,6 @@ class Flappy:
             face_center = self.detect_face(frame)
 
             if face_center is not None and self.tracking:
-                # Se o rosto for detectado e o rastreamento estiver ativado, atualize a posição do jogador
                 x, y = face_center
                 self.player.update_position(y)
 
@@ -161,7 +159,7 @@ class Flappy:
     def tracking_thread(self):
         cv2.namedWindow("Image")
         last_frame_timestamp = time.time()
-        bbox = None  # Inicialize bbox como None
+        bbox = None
 
         while True:
             begin_time_stamp = time.time()
@@ -184,7 +182,7 @@ class Flappy:
                 self.tracking = True
 
             if self.tracking:
-                if bbox is not None:  # Certifique-se de que bbox não seja None antes de tentar atualizar
+                if bbox is not None:
                     track_ok, bbox = self.tracker.update(frame)
                     if track_ok:
                         x, y, w, h = map(int, bbox)
@@ -209,13 +207,9 @@ class Flappy:
         cv2.destroyAllWindows()
 
     def detect_face(self, frame):
-        # Converta o frame para escala de cinza para a detecção de face
         gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-        # Carregue o classificador de cascata Haar para detecção de face (pode ser necessário ajustar o caminho do arquivo XML)
         face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
-
-        # Detecte faces no frame
         faces = face_cascade.detectMultiScale(gray_frame, scaleFactor=1.3, minNeighbors=5)
 
         if len(faces) > 0:
