@@ -115,12 +115,9 @@ class Flappy:
             self.pipes.tick()
             self.score.tick()
 
-            # Obtenha o frame da câmera
             _, frame = self.cap.read()
 
-            # Detecte a posição do rosto
             face_center = self.detect_face(frame)
-
             if face_center is not None and self.tracking:
                 x, y = face_center
                 self.player.update_position(y)

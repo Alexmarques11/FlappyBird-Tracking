@@ -46,15 +46,15 @@ class Player(Entity):
             self.reset_vals_crash()
 
     def reset_vals_normal(self) -> None:
-        self.vel_y = -9  # player's velocity along Y axis
-        self.max_vel_y = 10  # max vel along Y, max descend speed
-        self.min_vel_y = -8  # min vel along Y, max ascend speed
-        self.acc_y = 1  # players downward acceleration
+        #self.vel_y = -9  # player's velocity along Y axis
+        #self.max_vel_y = 10  # max vel along Y, max descend speed
+        #self.min_vel_y = -8  # min vel along Y, max ascend speed
+        #self.acc_y = 1  # players downward acceleration
 
-        self.rot = 80  # player's current rotation
-        self.vel_rot = -3  # player's rotation speed
-        self.rot_min = -90  # player's min rotation angle
-        self.rot_max = 20  # player's max rotation angle
+        self.rot = 0  # player's current rotation
+        self.vel_rot = 0  # player's rotation speed
+        self.rot_min = 0  # player's min rotation angle
+        self.rot_max = 0  # player's max rotation angle
 
         self.flap_acc = -9  # players speed on flapping
         self.flapped = False  # True when player flaps
@@ -117,7 +117,7 @@ class Player(Entity):
         self.rot = clamp(self.rot + self.vel_rot, self.rot_min, self.rot_max)
 
     def update_position(self, Cy):
-        self.Cy = Cy  # Atualize a posição Y com base em Cy
+        self.Cy = Cy
         self.y = int(self.Cy - self.h / 2)
 
     def draw(self) -> None:
